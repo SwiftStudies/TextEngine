@@ -3,16 +3,42 @@ import XCTest
 
 final class TextEngineTests: XCTestCase {
     
-    func testRenderingHierarchy(){
+    func testRenderingElements(){
         let screen = Screen(size: (160,160), background: " ")
         
-        screen.add(child: Sprite(at: (16,16), with: (8,8), rendering: "@"))
+        screen.add(child: Box(at: (0,0), of: screen.size))
+        screen.add(child: Sprite(at: (72,72), with: (16,16), rendering: "@"))
+        screen.add(child: Ellipse(at: (0,0), of: screen.size))
+        
+        screen.add(child: Dot(at:(0,0)))
+        screen.add(child: Dot(at:(0,159)))
+        screen.add(child: Dot(at:(159,0)))
+        screen.add(child: Dot(at:(159,159)))
+        
+        screen.add(child: Polygon(at:(0,0), path: [(79,0),(159,79),(79,159),(0,79)], closed: true))
+
+        screen.add(child: Polygon(at:(0,0), path: [(0,159),(159,0)], closed: false, drawWith: "/"))
+
         
         let frameBuffer = Display((160,160), pixelsPerCharacter: (8,16))
         
         screen.render(to: frameBuffer)
         
-        print(frameBuffer)
+        let expected = """
+        O---****XXXX****--//
+        | **  XX   XXX  // |
+        **  XX       X//  **
+        * XX        //  XX *
+        XX       @//      XX
+        XXX     //@      XXX
+        * XXX //       XXX *
+        **  //X      XXX  **
+        | //  XXX  XXX  ** |
+        //--****XXXX****---O
+
+        """
+        
+        XCTAssertEqual(frameBuffer.description, expected)
     }
     
     func testScreen(){
@@ -70,6 +96,6 @@ final class TextEngineTests: XCTestCase {
     static var allTests = [
         ("testDisplay", testDisplay),
         ("testScreen", testScreen),
-        ("testRenderingHierarchy", testRenderingHierarchy),
+        ("testRenderingElements", testRenderingElements),
     ]
 }

@@ -15,11 +15,22 @@ protocol ContainableNode : ViewNode {
 
 protocol ContainerNode : ViewNode {
     func add(child:ContainableNode)
-    var children : [ViewNode] { get set}
+    var  children : [ContainableNode] { get set}
 }
 
 extension ContainerNode {
 
+    var accumulatedSize : Size {
+        var size : Size = (0,0)
+        
+        for child in children {
+            size.width = max(size.width, child.position.x + child.size.width)
+            size.height = max(size.height, child.position.y + child.size.height)
+        }
+        
+        return size
+    }
+    
     func add(child:ContainableNode){
         children.append(child)
         child.parent = self

@@ -12,28 +12,25 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-class Screen : ContainerNode {
-    let position : Point = (0,0)
-    var parent : ViewNode?  = nil
 
-    let size : Size
-    var children = [ContainableNode] ()
+class Dot : ContainableNode {
+    var parent: ContainerNode? = nil
+    var position: Point
+    var character : Character
     
-    var background : Character
+    var size: Size {
+        return (1,1)
+    }
     
-    init(size:Size, background:Character = " "){
-        self.size = size
-        self.background = background
+    init(at position:Point, drawAs character: Character = "O"){
+        self.position = position
+        self.character = character
     }
     
     func render(to frameBuffer: FrameBuffer) {
-        for x in 0..<size.width {
-            for y in 0..<size.height {
-                frameBuffer[x,y] = background
-            }
-        }
-        
-        renderChildren(to: frameBuffer)
+        frameBuffer[0, 0] = character
     }
-
+    
+    
 }
+

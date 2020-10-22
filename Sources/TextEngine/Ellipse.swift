@@ -12,28 +12,30 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-class Screen : ContainerNode {
-    let position : Point = (0,0)
-    var parent : ViewNode?  = nil
+import Foundation
 
-    let size : Size
-    var children = [ContainableNode] ()
+class Ellipse : ContainableNode {
+    var parent: ContainerNode? = nil
+    var position: Point
+    var size: Size
     
-    var background : Character
-    
-    init(size:Size, background:Character = " "){
+    init(at position:Point, of size:Size){
+        self.position = position
         self.size = size
-        self.background = background
     }
     
     func render(to frameBuffer: FrameBuffer) {
-        for x in 0..<size.width {
-            for y in 0..<size.height {
-                frameBuffer[x,y] = background
-            }
+        let center = (x:Double(size.width / 2), y:Double(size.height / 2))
+        let size = (width:Double(self.size.width), height:Double(self.size.height))
+        
+        for theta : Double in stride(from: 0.0, to: Double.pi * 2, by: Double.pi / 180) {
+            let x = center.x + ((size.width/2) * cos(theta))
+            let y = center.y - ((size.height/2) * sin(theta))
+
+            frameBuffer[Int(x), Int(y)] = "*"
         }
         
-        renderChildren(to: frameBuffer)
     }
-
+    
+    
 }
