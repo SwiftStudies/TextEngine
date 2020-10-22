@@ -31,6 +31,10 @@ class Dot : ContainableNode {
         frameBuffer[0, 0] = character
     }
     
-    
+    func copy() -> Self {
+        let copy = Dot(at: position, drawAs: character)
+        
+        return copy as! Self
+    }
 }
 

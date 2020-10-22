@@ -36,4 +36,13 @@ class Screen : ContainerNode {
         renderChildren(to: frameBuffer)
     }
 
+    func copy() -> Self {
+        let copy = Screen(size: size, background: background)
+        
+        for child in children {
+            add(child: child.copy())
+        }
+        
+        return copy as! Self
+    }
 }

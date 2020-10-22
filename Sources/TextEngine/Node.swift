@@ -28,4 +28,16 @@ class Node : ContainableNode, ContainerNode {
     func render(to frameBuffer: FrameBuffer) {
         renderChildren(to: frameBuffer)
     }
+    
+    func copy() -> Self {
+        let copy = Node()
+        
+        copy.position = position
+        for child in children {
+            add(child: child.copy())
+        }
+        
+        return copy as! Self
+    }
 }
+

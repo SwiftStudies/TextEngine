@@ -68,5 +68,9 @@ class Polygon : ContainableNode {
         }
     }
     
-    
+    func copy() -> Self {
+        let copy = Polygon(at: position, path: path, closed: false, drawWith: character)
+        
+        return copy as! Self
+    }
 }

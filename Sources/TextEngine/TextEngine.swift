@@ -7,6 +7,8 @@ protocol ViewNode : AnyObject {
     var size     : Size { get }
     
     func render(to frameBuffer:FrameBuffer)
+    
+    func copy()->Self
 }
 
 protocol ContainableNode : ViewNode {

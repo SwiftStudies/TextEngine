@@ -33,5 +33,9 @@ class Box : ContainableNode {
         }
     }
     
-    
+    func copy() -> Self {
+        let copy = Box(at: position, of: size)
+        
+        return copy as! Self
+    }
 }

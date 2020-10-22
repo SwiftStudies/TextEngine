@@ -3,6 +3,34 @@ import XCTest
 
 final class TextEngineTests: XCTestCase {
     
+    func testRenderingHierarchy(){
+        let screen = Screen(size: (160,160), background: " ")
+        
+        screen.add(child: Box(at: (0,0), of: screen.size))
+        screen.add(child: Sprite(at: (72,72), with: (16,16), rendering: "@"))
+        screen.add(child: Ellipse(at: (0,0), of: screen.size))
+        
+        screen.add(child: Dot(at:(0,0)))
+        screen.add(child: Dot(at:(0,159)))
+        screen.add(child: Dot(at:(159,0)))
+        screen.add(child: Dot(at:(159,159)))
+        
+        screen.add(child: Polygon(at:(0,0), path: [(79,0),(159,79),(79,159),(0,79)], closed: true))
+
+        screen.add(child: Polygon(at:(0,0), path: [(0,159),(159,0)], closed: false, drawWith: "/"))
+
+        
+        let frameBuffer = Display((160,160), pixelsPerCharacter: (4,8))
+        
+        screen.render(to: frameBuffer)
+        
+        let expected = """
+        """
+        
+        XCTAssertEqual(frameBuffer.description, expected)
+        print(frameBuffer)
+    }
+    
     func testRenderingElements(){
         let screen = Screen(size: (160,160), background: " ")
         
@@ -97,5 +125,6 @@ final class TextEngineTests: XCTestCase {
         ("testDisplay", testDisplay),
         ("testScreen", testScreen),
         ("testRenderingElements", testRenderingElements),
+        ("testRenderingHierarchy", testRenderingHierarchy),
     ]
 }

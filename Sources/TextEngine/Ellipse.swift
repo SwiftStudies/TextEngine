@@ -37,5 +37,9 @@ class Ellipse : ContainableNode {
         
     }
     
-    
+    func copy() -> Self {
+        let copy = Ellipse(at: position, of: size)
+        
+        return copy as! Self
+    }
 }
