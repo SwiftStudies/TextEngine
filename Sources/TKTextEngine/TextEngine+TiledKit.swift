@@ -12,32 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import Foundation
-
-public class Node : ContainableNode, ContainerNode {
-    public var parent: ContainerNode?
-    
-    public var children = [ContainableNode]()
-    
-    public var position: Point = (0,0)
-    
-    public var size: Size {
-        return accumulatedSize
-    }
-    
-    public func render(to frameBuffer: FrameBuffer) {
-        renderChildren(to: frameBuffer)
-    }
-    
-    public func copy() -> Self {
-        let copy = Node()
-        
-        copy.position = position
-        for child in children {
-            add(child: child.copy())
-        }
-        
-        return copy as! Self
-    }
-}
+import TiledKit
+import TextEngine
 

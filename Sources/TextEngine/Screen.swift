@@ -12,21 +12,21 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-class Screen : ContainerNode {
-    let position : Point = (0,0)
+public class Screen : ContainerNode {
+    public let position : Point = (0,0)
     var parent : ViewNode?  = nil
 
-    let size : Size
-    var children = [ContainableNode] ()
+    public let size : Size
+    public var children = [ContainableNode] ()
     
     var background : Character
     
-    init(size:Size, background:Character = " "){
+    public init(size:Size, background:Character = " "){
         self.size = size
         self.background = background
     }
     
-    func render(to frameBuffer: FrameBuffer) {
+    public func render(to frameBuffer: FrameBuffer) {
         for x in 0..<size.width {
             for y in 0..<size.height {
                 frameBuffer[x,y] = background
@@ -36,7 +36,7 @@ class Screen : ContainerNode {
         renderChildren(to: frameBuffer)
     }
 
-    func copy() -> Self {
+    public func copy() -> Self {
         let copy = Screen(size: size, background: background)
         
         for child in children {

@@ -12,12 +12,12 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-class Polygon : ContainableNode {
-    var parent: ContainerNode? = nil
-    var position: Point
+public class Polygon : ContainableNode {
+    public var parent: ContainerNode? = nil
+    public var position: Point
     var character : Character
     var path : [Point]
-    var size: Size {
+    public var size: Size {
         var size : Size = (0,0)
         for point in path {
             size.width = max(size.width,point.x)
@@ -26,7 +26,7 @@ class Polygon : ContainableNode {
         return size
     }
     
-    init(at position:Point, path:[Point], closed : Bool,  drawWith character:Character = "X"){
+    public init(at position:Point, path:[Point], closed : Bool,  drawWith character:Character = "X"){
         self.position = position
         self.character = character
         self.path = path
@@ -59,7 +59,7 @@ class Polygon : ContainableNode {
         }
     }
     
-    func render(to frameBuffer: FrameBuffer) {
+    public func render(to frameBuffer: FrameBuffer) {
         for p in 1..<path.count {
             let p0 = path[p-1]
             let p1 = path[p]
@@ -68,7 +68,7 @@ class Polygon : ContainableNode {
         }
     }
     
-    func copy() -> Self {
+    public func copy() -> Self {
         let copy = Polygon(at: position, path: path, closed: false, drawWith: character)
         
         return copy as! Self

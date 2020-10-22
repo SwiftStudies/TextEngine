@@ -14,20 +14,20 @@
 
 import Foundation
 
-protocol FrameBuffer : AnyObject {
+public protocol FrameBuffer : AnyObject {
     subscript(x:Int,y:Int)->Character {get set}
 }
 
-class Context : FrameBuffer {
+public class Context : FrameBuffer {
     private var offset : Point
     private var buffer : FrameBuffer
     
-    init(offset:Point, in frameBuffer:FrameBuffer){
+    public init(offset:Point, in frameBuffer:FrameBuffer){
         self.offset = offset
         self.buffer = frameBuffer
     }
     
-    subscript(x: Int, y: Int) -> Character {
+    public subscript(x: Int, y: Int) -> Character {
         get {
             return buffer[x+offset.x, y+offset.y]
         }
@@ -38,7 +38,7 @@ class Context : FrameBuffer {
     }
 }
 
-class Display : FrameBuffer, CustomStringConvertible{
+public class Display : FrameBuffer, CustomStringConvertible{
     private var  characterSizeInPixels : Size
     private var size               : Size
     
@@ -48,13 +48,13 @@ class Display : FrameBuffer, CustomStringConvertible{
         return (size.width / characterSizeInPixels.width, size.height / characterSizeInPixels.height)
     }
         
-    init(_ size:Size, pixelsPerCharacter:Size) {
+    public init(_ size:Size, pixelsPerCharacter:Size) {
         self.characterSizeInPixels = pixelsPerCharacter
         self.size = size
         frameBuffer = [Character](repeating: " ", count: (size.width / characterSizeInPixels.width) * (size.height / characterSizeInPixels.height))
     }
     
-    subscript(x: Int, y: Int) -> Character {
+    public subscript(x: Int, y: Int) -> Character {
         get {
             let x = x / characterSizeInPixels.width
             let y = y / characterSizeInPixels.height
@@ -74,7 +74,7 @@ class Display : FrameBuffer, CustomStringConvertible{
         }
     }
     
-    var description: String {
+    public var description: String {
         var displayString = ""
         for y in 0..<characterSize.height {
             var scanLine = ""

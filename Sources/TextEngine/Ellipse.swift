@@ -14,17 +14,17 @@
 
 import Foundation
 
-class Ellipse : ContainableNode {
-    var parent: ContainerNode? = nil
-    var position: Point
-    var size: Size
+public class Ellipse : ContainableNode {
+    public var parent: ContainerNode? = nil
+    public var position: Point
+    public var size: Size
     
-    init(at position:Point, of size:Size){
+    public init(at position:Point, of size:Size){
         self.position = position
         self.size = size
     }
     
-    func render(to frameBuffer: FrameBuffer) {
+    public func render(to frameBuffer: FrameBuffer) {
         let center = (x:Double(size.width / 2), y:Double(size.height / 2))
         let size = (width:Double(self.size.width), height:Double(self.size.height))
         
@@ -37,7 +37,7 @@ class Ellipse : ContainableNode {
         
     }
     
-    func copy() -> Self {
+    public func copy() -> Self {
         let copy = Ellipse(at: position, of: size)
         
         return copy as! Self

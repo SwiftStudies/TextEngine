@@ -1,8 +1,8 @@
-typealias Point = (x:Int,y:Int)
-typealias Size = (width:Int,height:Int)
-typealias Rectangle = (origin:Point, size:Size)
+public typealias Point = (x:Int,y:Int)
+public typealias Size = (width:Int,height:Int)
+public typealias Rectangle = (origin:Point, size:Size)
 
-protocol ViewNode : AnyObject {
+public protocol ViewNode : AnyObject {
     var position : Point { get }
     var size     : Size { get }
     
@@ -11,16 +11,16 @@ protocol ViewNode : AnyObject {
     func copy()->Self
 }
 
-protocol ContainableNode : ViewNode {
+public protocol ContainableNode : ViewNode {
     var parent   : ContainerNode? { get set }
 }
 
-protocol ContainerNode : ViewNode {
+public protocol ContainerNode : ViewNode {
     func add(child:ContainableNode)
     var  children : [ContainableNode] { get set}
 }
 
-extension ContainerNode {
+public extension ContainerNode {
 
     var accumulatedSize : Size {
         var size : Size = (0,0)

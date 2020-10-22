@@ -13,12 +13,12 @@
 //    limitations under the License.
 
 
-class Dot : ContainableNode {
-    var parent: ContainerNode? = nil
-    var position: Point
+public class Dot : ContainableNode {
+    public var parent: ContainerNode? = nil
+    public var position: Point
     var character : Character
     
-    var size: Size {
+    public var size: Size {
         return (1,1)
     }
     
@@ -27,11 +27,11 @@ class Dot : ContainableNode {
         self.character = character
     }
     
-    func render(to frameBuffer: FrameBuffer) {
+    public func render(to frameBuffer: FrameBuffer) {
         frameBuffer[0, 0] = character
     }
     
-    func copy() -> Self {
+    public func copy() -> Self {
         let copy = Dot(at: position, drawAs: character)
         
         return copy as! Self

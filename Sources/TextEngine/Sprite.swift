@@ -14,19 +14,19 @@
 
 import Foundation
 
-class Sprite : ContainableNode {
-    var position: Point
-    var size: Size
-    var parent: ContainerNode? = nil
+public class Sprite : ContainableNode {
+    public var position: Point
+    public var size: Size
+    public var parent: ContainerNode? = nil
     let character : Character
     
-    init(at position:Point, with size:Size, rendering character:Character){
+    public init(at position:Point, with size:Size, rendering character:Character){
         self.position = position
         self.size = size
         self.character = character
     }
     
-    func render(to frameBuffer: FrameBuffer) {
+    public func render(to frameBuffer: FrameBuffer) {
         for x in 0..<size.width {
             for y in 0..<size.height {
                 frameBuffer[x,y] = character
@@ -34,7 +34,7 @@ class Sprite : ContainableNode {
         }
     }
     
-    func copy() -> Self {
+    public func copy() -> Self {
         let copy = Sprite(at: position, with: size, rendering: character)
         
         return copy as! Self
