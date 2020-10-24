@@ -85,6 +85,16 @@ public struct TKTextEngine : Engine {
         return Sprite(at: position, with: size, rendering: "S")
     }
     
+    public static func make(tileLayer layer: LayerProtocol, with sprites: MapTiles<TKTextEngine>, in map: Map, from project: Project) throws -> Node? {
+        return Node(at: layer.position.transform)
+    }
+    
+    public static func make(tileWith tile: Sprite, at position: Position, for tileLayer: LayerProtocol, in map: Map, from project: Project) throws -> Sprite {
+        tile.position = position.transform
+        
+        return tile
+    }
+    
     public static func make(objectContainerFrom layer: LayerProtocol, in map: Map, from project: Project) throws -> Node? {
         return Node(at: layer.position.transform)
     }
@@ -92,25 +102,6 @@ public struct TKTextEngine : Engine {
     public static func make(groupFrom layer: LayerProtocol, in map: Map, from project: Project) throws -> Node? {
         return Node(at: layer.position.transform)
     }
-    
-    public static func make(tileLayer tileGrid: TileGrid, for layer: LayerProtocol, with sprites: MapTiles<TKTextEngine>, in map: Map, from project: Project) throws -> Node? {
-
-        let layerNode = Node(at: layer.position.transform)
-        
-        for x in 0..<tileGrid.size.width{
-            for y in 0..<tileGrid.size.height {
-                if let sprite = sprites[tileGrid[x,y]] {
-                    sprite.position = (x*map.tileSize.width, y*map.tileSize.height)
-                    layerNode.add(child: sprite)
-                } else {
-                    TKTextEngine.warn("Not not get a sprite for the tile at \(x),\(y) in tile layer \(layer.name)")
-                }
-            }
-        }
-
-        return layerNode
-    }
-
     
     //
     // Objects
