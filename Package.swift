@@ -31,7 +31,8 @@ let package = Package(
             dependencies: ["TiledKit"]),
         .testTarget(
             name: "TKTextEngineTests",
-            dependencies: ["TKTextEngine","TiledKit","TextEngine"]),
+            dependencies: ["TKTextEngine","TiledKit","TextEngine"],
+            resources: [.copy("Resources")]),
         .testTarget(
             name: "TextEngineTests",
             dependencies: ["TextEngine"]),
