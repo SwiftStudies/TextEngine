@@ -4,6 +4,8 @@
     ],
     "extensionsPath": "extensions",
     "folders": [
+        "Images",
+        "Tilesets"
     ],
     "objectTypesFile": ""
 }

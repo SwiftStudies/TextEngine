@@ -60,6 +60,14 @@ public struct TKTextEngine : Engine {
     //
     
     public static func make(spriteFor tile: Tile, in tileset: TileSet, with texture: Character, from project: Project) throws -> Sprite {
+        
+        var texture = texture
+        if let characterProperty = tile.properties["Character"] {
+            if case let PropertyValue.string(value) = characterProperty {
+                texture = value.first ?? texture
+            }
+        }
+        
         return Sprite(at: (0,0), with: (tileset.tileSize.width, tileset.tileSize.height), rendering: texture)
     }
     
@@ -86,8 +94,21 @@ public struct TKTextEngine : Engine {
     }
     
     public static func make(tileLayer tileGrid: TileGrid, for layer: LayerProtocol, with sprites: MapTiles<TKTextEngine>, in map: Map, from project: Project) throws -> Node? {
-        #warning("Needs to be implemented")
-        return Node(at: layer.position.transform)
+
+        let layerNode = Node(at: layer.position.transform)
+        
+        for x in 0..<tileGrid.size.width{
+            for y in 0..<tileGrid.size.height {
+                if let sprite = sprites[tileGrid[x,y]] {
+                    sprite.position = (x*map.tileSize.width, y*map.tileSize.height)
+                    layerNode.add(child: sprite)
+                } else {
+                    TKTextEngine.warn("Not not get a sprite for the tile at \(x),\(y) in tile layer \(layer.name)")
+                }
+            }
+        }
+
+        return layerNode
     }
 
     
