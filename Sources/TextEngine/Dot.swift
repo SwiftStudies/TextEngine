@@ -13,25 +13,28 @@
 //    limitations under the License.
 
 
-public class Dot : ContainableNode {
-    public var parent: ContainerNode? = nil
-    public var position: Point
+public class Dot : BaseNode {
     var character : Character
     
-    public var size: Size {
-        return (1,1)
+    public override var size: Size {
+        get {
+            return (1,1)
+        }
+        set {
+        }
     }
     
-    init(at position:Point, drawAs character: Character = "O"){
-        self.position = position
+    public init(at position:Point, drawAs character: Character = "O"){
         self.character = character
+        super.init()
+        self.position = position
     }
     
-    public func render(to frameBuffer: FrameBuffer) {
+    public override func render(to frameBuffer: FrameBuffer) {
         frameBuffer[0, 0] = character
     }
     
-    public func copy() -> Self {
+    public override func copy() -> Self {
         let copy = Dot(at: position, drawAs: character)
         
         return copy as! Self

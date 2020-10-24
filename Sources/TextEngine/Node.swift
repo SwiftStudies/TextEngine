@@ -14,25 +14,48 @@
 
 import Foundation
 
-public class Node : ContainableNode, ContainerNode {
-    public var parent: ContainerNode?
-    
-    public var children = [ContainableNode]()
-    
+public class BaseNode : ContainableNode {
+    public var parent: ContainerNode? = nil
     public var position: Point = (0,0)
+    public var size: Size = (0,0)
     
-    public var size: Size {
-        return accumulatedSize
-    }
+    
     
     public func render(to frameBuffer: FrameBuffer) {
-        renderChildren(to: frameBuffer)
+        fatalError("Implement this!")
     }
     
     public func copy() -> Self {
-        let copy = Node()
-        
-        copy.position = position
+        fatalError("Implement this!")
+    }
+    
+    
+}
+
+public class Node : BaseNode, ContainerNode {
+    public var children = [ContainableNode]()
+    
+    public init(at position:Point){
+        super.init()
+        self.position = position
+    }
+    
+    public override var size: Size {
+        get {
+            return accumulatedSize
+        }
+        set {
+            
+        }
+    }
+    
+    public override func render(to frameBuffer: FrameBuffer) {
+        renderChildren(to: frameBuffer)
+    }
+    
+    public override func copy() -> Self {
+        let copy = Node(at: position)
+
         for child in children {
             add(child: child.copy())
         }

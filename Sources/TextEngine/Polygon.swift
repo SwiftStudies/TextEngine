@@ -12,27 +12,31 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-public class Polygon : ContainableNode {
-    public var parent: ContainerNode? = nil
-    public var position: Point
+public class Polygon : BaseNode {
     var character : Character
     var path : [Point]
-    public var size: Size {
-        var size : Size = (0,0)
-        for point in path {
-            size.width = max(size.width,point.x)
-            size.height = max(size.height, point.y)
+    public override var size: Size {
+        get {
+            var size : Size = (0,0)
+            for point in path {
+                size.width = max(size.width,point.x)
+                size.height = max(size.height, point.y)
+            }
+            return size
         }
-        return size
+        set {
+            
+        }
     }
     
     public init(at position:Point, path:[Point], closed : Bool,  drawWith character:Character = "X"){
-        self.position = position
         self.character = character
         self.path = path
         if closed {
             self.path.append(path[0])
         }
+        super.init()
+        self.position = position
     }
     
     private func line(from p0:Point, to p1:Point, in frameBuffer:FrameBuffer){
@@ -59,7 +63,7 @@ public class Polygon : ContainableNode {
         }
     }
     
-    public func render(to frameBuffer: FrameBuffer) {
+    public override func render(to frameBuffer: FrameBuffer) {
         for p in 1..<path.count {
             let p0 = path[p-1]
             let p1 = path[p]
@@ -68,7 +72,7 @@ public class Polygon : ContainableNode {
         }
     }
     
-    public func copy() -> Self {
+    public override func copy() -> Self {
         let copy = Polygon(at: position, path: path, closed: false, drawWith: character)
         
         return copy as! Self

@@ -35,9 +35,7 @@ public class Sprite : ContainableNode {
     }
     
     public func copy() -> Self {
-        let copy = Sprite(at: position, with: size, rendering: character)
-        
-        return copy as! Self
+        return Sprite(at: position, with: size, rendering: character) as! Self
     }
     
 }

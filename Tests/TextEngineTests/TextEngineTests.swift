@@ -8,8 +8,7 @@ final class TextEngineTests: XCTestCase {
         
         let ellipse = Ellipse(at: (-20,-20), of: (40,40))
         
-        let node = Node()
-        node.position = (80,80)
+        let node = Node(at: (80,80))
         node.add(child: ellipse)
 
         screen.add(child: Box(at: (0,0), of: screen.size))

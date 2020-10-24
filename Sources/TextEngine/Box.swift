@@ -12,17 +12,14 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-public class Box : ContainableNode {
-    public var parent: ContainerNode? = nil
-    public var position: Point
-    public var size: Size
-    
-    init(at position:Point, of size:Size){
+public class Box : BaseNode {
+    public init(at position:Point, of size:Size){
+        super.init()
         self.position = position
         self.size = size
     }
     
-    public func render(to frameBuffer: FrameBuffer) {
+    public override func render(to frameBuffer: FrameBuffer) {
         for x in 0..<size.width {
             frameBuffer[x,0] = "-"
             frameBuffer[x,size.height-1] = "-"
@@ -33,7 +30,7 @@ public class Box : ContainableNode {
         }
     }
     
-    public func copy() -> Self {
+    public override func copy() -> Self {
         let copy = Box(at: position, of: size)
         
         return copy as! Self
