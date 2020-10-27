@@ -8,7 +8,7 @@ enum Projects {
     case genericTiled
     
     var url : URL {
-        let tiledResourcesURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent(".build/checkouts/TiledResources/Sources/TiledResources/Generic Tiled Project/Generic Tiled Project.tiled-project")
+        let tiledResourcesURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent(".build/checkouts/TiledResources/Sources/TiledResources/Generic Tiled Project/")
         return tiledResourcesURL
 //        switch self {
 //        case .genericTiled:
@@ -42,7 +42,7 @@ final class TKTextEngineTests: XCTestCase {
 
             let map = try project.retrieve(TKTextEngine.self, mapNamed: "Isometric", in: "Maps")
             
-            let display = Display(map.size, pixelsPerCharacter: (6,12))
+            let display = Display(map.size, pixelsPerCharacter: (12,24))
             
             map.render(to: display)
             
