@@ -2,51 +2,70 @@ import XCTest
 import TextEngine
 import TiledKit
 import TKTextEngine
-
-#warning("Temporary Solution until https://bugs.swift.org/browse/SR-13714 is fixed and I can reference TiledResources from here")
-enum Projects {
-    case genericTiled
-    
-    var url : URL {
-        let tiledResourcesURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent(".build/checkouts/TiledResources/Sources/TiledResources/Generic Tiled Project/")
-        return tiledResourcesURL
-//        switch self {
-//        case .genericTiled:
-//            return URL(fileURLWithPath: <#T##String#>)
-//        }
-    }
-}
+import TiledResources
 
 final class TKTextEngineTests: XCTestCase {
     
     func testLoading(){
-        let testsProject = Project(using: Bundle.module)
         
         do {
-            let map = try testsProject.retrieve(TKTextEngine.self, mapNamed: "Example")
+            let map = try TiledResources.GenericTiledProject.Maps.oneOfEverything.load(for: TKTextEngine.self)
             
             let display = Display(map.size, pixelsPerCharacter: (6,12))
             
             map.render(to: display)
             
-            print(display)
+            let expected = """
+            AACCCC               CCCAA
+            CC|--|     AAAA      ***CC
+            CC|--|     AAAA      ****C
+                                      
+                                      
+                                      
+            S            O            
+                                      
+                                      
+                                      
+            CCCXX                  XCC
+            CCXXXX               XXXCC
+            AACCCC               XCCAA
+
+            """
+            XCTAssertEqual(expected, display.description)
         } catch {
             return XCTFail("Unexpected error: \(error)")
         }
     }
     
     func testIsometric(){
-        print(Projects.genericTiled.url.path)
         do {
-            let project = Project(at: Projects.genericTiled.url)
 
-            let map = try project.retrieve(TKTextEngine.self, mapNamed: "Isometric", in: "Maps")
+            let map = try TiledResources.GenericTiledProject.Maps.isometric.load(for: TKTextEngine.self)
             
             let display = Display(map.size, pixelsPerCharacter: (12,24))
             
             map.render(to: display)
+
+            let expected = """
+                                  IIIIIIIII                      
+                              IIIIIIIIIIIIIIIII                  
+                          IIIIIIIIIIIIIIIIIIIIIIIII              
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII          
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII      
+              IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  
+            IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+             IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 
+                 IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII     
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII         
+                         IIIIIIIIIIIIIIIIIIIIIIIIIII             
+                             IIIIIIIIIIIIIIIIIII                 
+                                 IIIIIIIIIII                     
+
+            """
+
+            XCTAssertEqual(expected, display.description)
             
-            print(display)
+            print(display.description)
         } catch {
             return XCTFail("Unexpected error: \(error)")
         }

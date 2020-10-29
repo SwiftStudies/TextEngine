@@ -32,10 +32,10 @@ let package = Package(
             dependencies: ["TiledKit"]),
         .testTarget(
             name: "TKTextEngineTests",
-            dependencies: ["TKTextEngine","TiledKit","TextEngine"],
-            resources: [.copy("Resources")]),
+            dependencies: ["TKTextEngine","TiledKit","TextEngine","TiledResources"]
+            ),
         .testTarget(
             name: "TextEngineTests",
-            dependencies: ["TextEngine"]),
+            dependencies: ["TextEngine","TiledKit","TiledResources"]),
     ]
 )
